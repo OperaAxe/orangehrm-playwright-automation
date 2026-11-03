@@ -5,7 +5,7 @@ from playwright.sync_api import Page, expect
 
 
 @pytest.mark.smoke
-def test_directory_search_returns_linda_anderson(
+def test_directory_autocomplete_search_returns_one_employee(
     authenticated_page: Page,
 ) -> None:
     page = authenticated_page
@@ -14,17 +14,21 @@ def test_directory_search_returns_linda_anderson(
     expect(page).to_have_url(
         re.compile(r".*/web/index\.php/directory/viewDirectory$")
     )
-    # OrangeHRM renders both a breadcrumb and a filter-panel heading with this name.
     expect(page.get_by_role("heading", name="Directory", level=5)).to_be_visible()
 
     employee_name = page.get_by_placeholder("Type for hints...")
-    employee_name.fill("Linda")
+    employee_name.fill("manda")
 
-    suggestion = page.get_by_role("option", name="Linda Anderson", exact=True)
+    # The shared demo's seeded employees can change. Choose a current matching
+    # autocomplete result rather than depending on a fixed employee record.
+    suggestion = page.get_by_role("option").filter(
+        has_text=re.compile(r"manda", re.IGNORECASE)
+    ).first
     expect(suggestion).to_be_visible()
-    suggestion.click()
 
+    selected_name = suggestion.inner_text().strip()
+    suggestion.click()
     page.get_by_role("button", name="Search", exact=True).click()
 
-    expect(page.get_by_text("(1) Record Found", exact=True)).to_be_visible()
-    expect(page.get_by_text("Linda Anderson", exact=True)).to_have_count(1)
+    expect(page.get_by_text(re.compile(r"\(1\)\s*Record Found", re.IGNORECASE))).to_be_visible()
+    expect(page.get_by_text(selected_name, exact=True)).to_have_count(1)
