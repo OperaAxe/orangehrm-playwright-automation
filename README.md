@@ -16,9 +16,9 @@ The suite concentrates on observable user journeys: login, dashboard navigation,
 | Login | Login screen loads | Login heading, username/password fields, and public demo credential hints are visible |
 | Authentication | Valid demo credentials | Browser reaches the Dashboard |
 | Dashboard | Main navigation renders | Admin, PIM, Leave, Time, My Info, Performance, Dashboard, Directory, and Maintenance are visible |
-| Directory | Type "manda" and pick the first matching employee from autocomplete | The search returns exactly one record for the selected employee |
+| Directory | Read the first employee listed, type their first name, and pick the matching autocomplete result | The search returns exactly one record for the selected employee |
 
-The suite uses whichever matching employee the shared demo currently has, because the demo data changes over time.
+The search reads a name from the live directory first, because the shared demo data changes often and a fixed name stops matching.
 
 ## Run locally
 
