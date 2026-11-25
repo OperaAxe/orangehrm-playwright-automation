@@ -16,9 +16,9 @@ The suite concentrates on observable user journeys: login, dashboard navigation,
 | Login | Login screen loads | Login heading, username/password fields, and public demo credential hints are visible |
 | Authentication | Valid demo credentials | Browser reaches the Dashboard |
 | Dashboard | Main navigation renders | Admin, PIM, Leave, Time, My Info, Performance, Dashboard, Directory, and Maintenance are visible |
-| Directory | Search for Linda Anderson | Autocomplete selection succeeds and exactly one matching record is displayed |
+| Directory | Type "manda" and pick the first matching employee from autocomplete | The search returns exactly one record for the selected employee |
 
-The live demo was inspected in a browser on **3 November 2026**. The initial exploratory run confirmed login, dashboard, navigation, and Directory search behaviour. See the [live smoke-run notes](reports/live-demo-smoke-run.md).
+The suite uses whichever matching employee the shared demo currently has, because the demo data changes over time.
 
 ## Run locally
 
@@ -90,7 +90,6 @@ Only use credentials you are authorised to use. The defaults are the credentials
 .
 ├── .github/workflows/tests.yml
 ├── docs/test-plan.md
-├── reports/live-demo-smoke-run.md
 ├── tests/
 │   ├── conftest.py
 │   ├── test_dashboard.py
@@ -106,12 +105,12 @@ Only use credentials you are authorised to use. The defaults are the credentials
 - This is a portfolio automation exercise against a shared public demo, not a client system.
 - The suite performs read-only checks after authentication. It does not create, edit, or delete employees, leave requests, attendance entries, or other records.
 - Demo data and availability can change. A failed run must be investigated before it is classified as an application defect.
-- The first browser-based exploratory pass was performed through a hosted browser session. The committed Playwright suite is reproducible locally and through GitHub Actions; the workflow badge links to its CI result.
+- The suite runs locally and in GitHub Actions on every push. The badge at the top links to the latest result.
 
 ## Author
 
 **Christian David** — Software Quality Assurance Engineer
 
-[GitHub](https://github.com/OperaAxe) · [LinkedIn](https://www.linkedin.com/in/davidchristianj/) · [Upwork](https://www.upwork.com/freelancers/~010e703beaa0687103)
+[GitHub](https://github.com/OperaAxe) · [LinkedIn](https://www.linkedin.com/in/davidchristianj/)
 
 > Good testing checks what the user actually experiences — then verifies the resulting state.
